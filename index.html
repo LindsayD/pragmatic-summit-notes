@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pragmatic Summit 2026 — Lindsay Donaghe's Conference Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --ink: #1a1a2e;
+            --paper: #faf9f6;
+            --accent: #c0392b;
+            --accent-light: #e74c3c;
+            --accent-bg: #fdf0ef;
+            --muted: #6b7280;
+            --border: #e5e2dc;
+            --callout-bg: #f0ebe3;
+            --callout-border: #b8a99a;
+            --card-bg: #ffffff;
+            --section-bg: #f5f3ef;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans 3', Georgia, serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.72;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: #ffffff;
+            color: var(--ink);
+            padding: 4rem 2rem 3.5rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto auto auto auto;
+            gap: 0;
+            align-items: start;
+        }
+        .summit-logo {
+            grid-column: 2;
+            grid-row: 2 / 4;
+            align-self: center;
+            justify-self: end;
+            opacity: 0.9;
+            width: 100px;
+            height: 100px;
+        }
+        .hero-eyebrow {
+            grid-column: 1 / -1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+        .hero h1 {
+            grid-column: 1;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 4.2rem);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            color: #111118;
+        }
+        .hero h1 .red-dot {
+            color: var(--accent);
+        }
+        .hero-subtitle {
+            grid-column: 1;
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 480px;
+            margin: 0.5rem 0 0;
+            line-height: 1.6;
+        }
+        .hero-meta {
+            grid-column: 1 / -1;
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .hero-bg-shapes { display: none; }
+        @media (max-width: 640px) {
+            .hero-content { grid-template-columns: 1fr; }
+            .summit-logo { grid-column: 1; grid-row: auto; margin-bottom: 1rem; width: 64px; height: 64px; }
+            .hero { padding: 3rem 1.5rem 2.5rem; }
+        }
+
+        /* ── Layout ── */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ── Table of Contents ── */
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem 2.5rem;
+            margin: 3rem auto;
+            max-width: 780px;
+        }
+        .toc h2 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--ink);
+        }
+        .toc ol {
+            list-style: none;
+            counter-reset: toc;
+        }
+        .toc li {
+            counter-increment: toc;
+            padding: 0.45rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .toc li:last-child { border-bottom: none; }
+        .toc li::before {
+            content: counter(toc, decimal-leading-zero);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-right: 0.75rem;
+        }
+        .toc a {
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .toc a:hover { color: var(--accent); }
+        .toc .toc-speaker {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 400;
+            margin-left: 2.1rem;
+        }
+
+        /* ── Sessions ── */
+        .session {
+            padding: 3.5rem 0 2rem;
+        }
+        .session + .session {
+            border-top: 2px solid var(--border);
+        }
+        .session-header {
+            margin-bottom: 2rem;
+        }
+        .session-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .session-title {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--ink);
+        }
+        .session-speakers {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* ── Content ── */
+        .session p {
+            margin-bottom: 1.1rem;
+        }
+
+        .session h3 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 2rem 0 0.8rem;
+            color: var(--ink);
+        }
+
+        .quote {
+            border-left: 3px solid var(--accent);
+            padding: 0.8rem 1.2rem;
+            margin: 1.5rem 0;
+            background: var(--accent-bg);
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+        }
+        .quote .attribution {
+            display: block;
+            font-style: normal;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.4rem;
+        }
+
+        /* ── Personal Commentary Callouts ── */
+        .callout {
+            background: #f4f5f7;
+            border-left: 3px solid #9ca3af;
+            border-radius: 0 6px 6px 0;
+            padding: 1rem 1.3rem;
+            margin: 1.4rem 0;
+            font-size: 0.93rem;
+            color: #4b5563;
+            position: relative;
+        }
+        .callout::before {
+            content: '💭 My take';
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        /* ── Panel format ── */
+        .panel-exchange {
+            margin: 1.2rem 0;
+            padding-left: 0;
+        }
+        .panel-exchange .speaker {
+            font-weight: 700;
+            color: var(--accent);
+            margin-right: 0.25rem;
+        }
+        .panel-exchange .speaker.kent { color: #c0392b; }
+        .panel-exchange .speaker.martin { color: #2874a6; }
+        .panel-exchange .speaker.gergely { color: #1e8449; }
+        .panel-exchange .speaker.drew { color: #7d3c98; }
+        .panel-exchange .speaker.michelle { color: #c0392b; }
+        .panel-exchange .speaker.tuomas { color: #2874a6; }
+        .panel-exchange .speaker.margaret-ann { color: #1e8449; }
+
+        .panel-remark {
+            margin-bottom: 1rem;
+        }
+        .panel-topic {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.76rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 2rem 0 0.8rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border);
+        }
+
+        /* ── Chart containers ── */
+        .chart-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .chart-card h4 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .chart-card .chart-subtitle {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 1.2rem;
+        }
+        .chart-card canvas {
+            max-height: 320px;
+        }
+        .chart-card .data-table {
+            margin-top: 1.2rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+        .chart-card table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .chart-card th, .chart-card td {
+            text-align: left;
+            padding: 0.4rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .chart-card th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .chart-card td:last-child, .chart-card th:last-child {
+            text-align: right;
+        }
+
+        /* ── Slide recreation (text-based) ── */
+        .slide-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .slide-card h4 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        .slide-card .slide-source {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+        .slide-card ul {
+            padding-left: 1.2rem;
+            margin: 0.5rem 0;
+        }
+        .slide-card li {
+            margin-bottom: 0.4rem;
+        }
+        .slide-card ul ul {
+            margin-top: 0.3rem;
+        }
+
+        /* ── Three column metrics table ── */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+        .metrics-grid .metric-col {
+            background: var(--card-bg);
+            padding: 1.4rem;
+        }
+        .metrics-grid .metric-col h5 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+        .metrics-grid .metric-col .metric-question {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+        .metrics-grid .metric-col ul {
+            list-style: disc;
+            padding-left: 1.1rem;
+            font-size: 0.85rem;
+        }
+        .metrics-grid .metric-col li {
+            margin-bottom: 0.35rem;
+        }
+        .metrics-grid .metric-col li .note {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        /* ── Frameworks side-by-side ── */
+        .frameworks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .framework-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .framework-card h5 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0.15rem;
+        }
+        .framework-card .framework-source {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-bottom: 0.8rem;
+        }
+        .framework-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .framework-card li {
+            padding: 0.35rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.88rem;
+        }
+        .framework-card li:last-child { border-bottom: none; }
+
+        /* ── Key takeaway highlight ── */
+        .key-takeaway {
+            background: var(--accent-bg);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.4rem 1.6rem;
+            margin: 1.8rem 0;
+            text-align: center;
+        }
+        .key-takeaway p {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1.15rem;
+            color: var(--accent);
+            margin-bottom: 0.3rem !important;
+        }
+        .key-takeaway .attribution {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* ── Resources ── */
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: var(--ink);
+            font-size: 0.9rem;
+            margin: 0.3rem 0.3rem 0.3rem 0;
+            transition: border-color 0.2s;
+        }
+        .resource-link:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            font-size: 0.82rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .metrics-grid { grid-template-columns: 1fr; }
+            .frameworks-grid { grid-template-columns: 1fr; }
+            .hero { padding: 3rem 1.5rem 2.5rem; }
+            .toc { padding: 1.5rem; }
+            .chart-card, .slide-card { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<header class="hero">
+    <div class="hero-content">
+        <div class="hero-eyebrow">Lindsay Donaghe's Conference Notes</div>
+        <!-- Pragmatic Summit logo mark -->
+        <svg class="summit-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="56" width="22" height="44" fill="#111118"/>
+            <rect x="30" y="14" width="22" height="86" fill="#111118"/>
+            <rect x="60" y="0" width="8" height="8" rx="0.5" fill="#e74c3c"/>
+            <rect x="60" y="28" width="22" height="72" fill="#111118"/>
+        </svg>
+        <h1>The<br>Pragmat<span class="red-dot">i</span>c<br>Summit</h1>
+        <p class="hero-subtitle">
+            How AI is reshaping software engineering — from data and tooling to craft and culture.
+        </p>
+        <div class="hero-meta">February 11, 2026 · San Francisco, CA · Convene 100 Stockton</div>
+    </div>
+</header>
+
+<!-- ═══════════════════ TOC ═══════════════════ -->
+<nav class="toc container">
+    <h2>Sessions</h2>
+    <ol>
+        <li>
+            <a href="#session-reshaping">How AI is Reshaping the Craft of Building Software</a>
+            <span class="toc-speaker">Vijaye Raji (OpenAI), Tibo Sottiaux (Codex), Gergely Orosz</span>
+        </li>
+        <li>
+            <a href="#session-data-hype">Data vs Hype: How Orgs Win with AI</a>
+            <span class="toc-speaker">Laura Tacho (CTO, DX) · Featuring data from DX (Q1 2026) and case studies from Haven, Cisco, JP Morgan Chase</span>
+        </li>
+        <li>
+            <a href="#session-cursor">Lessons from Building Cursor</a>
+            <span class="toc-speaker">Sualeh Asif (Cursor), Alex Xu &amp; Sahn Lam (ByteByteGo)</span>
+        </li>
+        <li>
+            <a href="#session-panel-beck">Frameworks for Reinventing Software — Again and Again</a>
+            <span class="toc-speaker">Panel: Kent Beck, Martin Fowler, Gergely Orosz</span>
+        </li>
+        <li>
+            <a href="#session-product-eng">Leading Product Engineering Teams in an AI-native World</a>
+            <span class="toc-speaker">Panel: Drew Hoskins, Michelle Lim, Tuomas Artman, Margaret-Ann Seger</span>
+        </li>
+        <li>
+            <a href="#session-closing">Closing Session</a>
+            <span class="toc-speaker">Rajeev Rajan (Atlassian), Thomas Dohmke (Entire), Gergely Orosz</span>
+        </li>
+    </ol>
+</nav>
+
+<main class="container">
+
+<!-- ═══════════════════ SESSION 1 ═══════════════════ -->
+<section class="session" id="session-reshaping">
+    <div class="session-header">
+        <div class="session-label">Session 01</div>
+        <h2 class="session-title">How AI is Reshaping the Craft of Building Software</h2>
+        <div class="session-speakers">Vijaye Raji (CTO of Applications, OpenAI) · Tibo Sottiaux (Head of Eng., Codex) · Gergely Orosz (Author, The Pragmatic Engineer)</div>
+    </div>
+
+    <h3>The Shifting Bottleneck</h3>
+    <p>The bottlenecks to building software are constantly moving. Code production used to be the constraint. Now, the bottleneck has shifted to <strong>review and validation</strong>. Next, it will move to <strong>gathering user requirements</strong> as quickly and accurately as possible.</p>
+
+    <p>One emerging pattern: run QA in a loop and flag regressions automatically. AI-assisted development is just one more level of abstraction — it still requires skilled people to control it.</p>
+
+    <div class="callout">
+        Intellisense was "developer crack" and fundamentally changed how we work. But engineering as a job survived that transition, and it will survive this one too.
+    </div>
+
+    <h3>New Engineers, New Mindset</h3>
+    <p>New-career engineers will be native to AI-assisted workflows. While they lack experience, they're also unbound by preconceptions about process or standards. For them, anything is possible.</p>
+
+    <p>The pace of change is staggering.</p>
+
+    <div class="callout">
+        Two years is too far out to predict. Even six months is hard to predict.
+    </div>
+
+    <h3>From Debugging to Diagnosing</h3>
+    <p>We will shift toward identifying quality by <strong>externally observing symptoms</strong> of things not working right, rather than debugging code internals.</p>
+
+    <div class="callout">
+        This feels like diagnosing a patient instead of programming. Doctors only order blood tests and exploratory surgery when symptoms are vague or haven't already been identified and categorized.
+    </div>
+</section>
+
+<!-- ═══════════════════ SESSION 2 ═══════════════════ -->
+<section class="session" id="session-data-hype">
+    <div class="session-header">
+        <div class="session-label">Session 02</div>
+        <h2 class="session-title">Data vs Hype: How Orgs Win with AI</h2>
+        <div class="session-speakers">Laura Tacho (CTO, DX)</div>
+    </div>
+
+    <div class="quote">
+        "Somewhere, something incredible is waiting to be known."
+        <span class="attribution">— Carl Sagan (opening quote)</span>
+    </div>
+
+    <p>It is good to have wonder, but also to recognize that there are other urgent problems to solve.</p>
+
+    <h3>AI Adoption by the Numbers</h3>
+
+    <!-- Chart 1: AI Coding Assistant Usage -->
+    <div class="chart-card">
+        <h4>92.6% of developers use AI coding assistants</h4>
+        <div class="chart-subtitle">Sample of 121,502 developers · Q1 2026, DX</div>
+        <canvas id="chart-adoption" height="260"></canvas>
+        <div class="data-table">
+            <table>
+                <thead><tr><th>Frequency</th><th>Share</th></tr></thead>
+                <tbody>
+                    <tr><td>Daily</td><td>44.1%</td></tr>
+                    <tr><td>Weekly</td><td>~28%</td></tr>
+                    <tr><td>Monthly</td><td>13.2%</td></tr>
+                    <tr><td>None / No Data</td><td>6.6%</td></tr>
+                    <tr><td>Never</td><td>0.8%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Chart 2: Time Savings -->
+    <div class="chart-card">
+        <h4>Developers save an average of 4.08 hours per week</h4>
+        <div class="chart-subtitle">Sample of 95,301 developers, 464 companies · Q1 2026, DX</div>
+        <canvas id="chart-timesavings" height="260"></canvas>
+        <div class="data-table">
+            <table>
+                <thead><tr><th>Usage Frequency</th><th>Avg. Hours Saved / Week</th></tr></thead>
+                <tbody>
+                    <tr><td>Daily</td><td>~4.8</td></tr>
+                    <tr><td>Weekly</td><td>~4.0</td></tr>
+                    <tr><td>Monthly</td><td>~3.4</td></tr>
+                    <tr><td>Infrequent</td><td>~2.8</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Chart 3: AI-Authored Code -->
+    <div class="chart-card">
+        <h4>26.9% of code is AI-authored</h4>
+        <div class="chart-subtitle">Sample of 42,644 developers · Q1 2026, DX</div>
+        <canvas id="chart-aicode" height="260"></canvas>
+        <div class="data-table">
+            <table>
+                <thead><tr><th>Usage Frequency</th><th>% AI-Authored Code</th></tr></thead>
+                <tbody>
+                    <tr><td>Daily</td><td>~30%</td></tr>
+                    <tr><td>Weekly</td><td>~26%</td></tr>
+                    <tr><td>Monthly</td><td>~25%</td></tr>
+                    <tr><td>Infrequent</td><td>~12%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Chart 4: Onboarding -->
+    <div class="chart-card">
+        <h4>AI cuts onboarding time in half</h4>
+        <div class="chart-subtitle">Sample of 35,594 developers (start dates after Jan 1, 2024) · Q1 2026, DX</div>
+        <canvas id="chart-onboarding" height="260"></canvas>
+        <div class="data-table">
+            <table>
+                <thead><tr><th>Quarter</th><th>Days to Reach 1st Merged PR (approx.)</th></tr></thead>
+                <tbody>
+                    <tr><td>Q1 2024</td><td>~95</td></tr>
+                    <tr><td>Q2 2024</td><td>~80</td></tr>
+                    <tr><td>Q3 2024</td><td>~60</td></tr>
+                    <tr><td>Q4 2024</td><td>~50</td></tr>
+                    <tr><td>Q1 2025+</td><td>~45</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p>However, the impact is uneven: some companies see 2× more customer-facing incidents while others see 50% fewer.</p>
+
+    <div class="callout">
+        AI amplifies what you do well <em>and</em> what you do badly.
+    </div>
+
+    <h3>Adoption ≠ Impact</h3>
+
+    <!-- Chart 5: High Adoption, Low Transformation -->
+    <div class="chart-card">
+        <h4>High adoption, low transformation</h4>
+        <div class="chart-subtitle">Comparing General-Purpose LLMs vs Embedded/Task-Specific GenAI</div>
+        <canvas id="chart-transformation" height="280"></canvas>
+        <div class="data-table">
+            <table>
+                <thead><tr><th>Stage</th><th>General-Purpose LLMs</th><th>Embedded / Task-Specific GenAI</th></tr></thead>
+                <tbody>
+                    <tr><td>Investigated</td><td>80%</td><td>60%</td></tr>
+                    <tr><td>Piloted</td><td>50%</td><td>~30%</td></tr>
+                    <tr><td>Successfully Implemented</td><td>40%</td><td>5%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p>Tools primarily enhance <strong>individual productivity</strong>, not P&amp;L. AI needs to be applied at an organizational level to see gains at that level.</p>
+
+    <p>Employee experimentation expands understanding and stretches the boundaries of what we can do with AI. It is valuable for individuals to explore and play.</p>
+
+    <p>It is important to distinguish between <strong>durable code</strong> and <strong>disposable code</strong>.</p>
+
+    <!-- Haven Slide -->
+    <div class="slide-card">
+        <h4>Case Study: Haven Headache &amp; Migraine Center</h4>
+        <div class="slide-source">Durable vs. disposable code in healthcare</div>
+        <ul>
+            <li>In healthcare, it is critical to distinguish between using agents for <strong>durable</strong> or <strong>disposable</strong> code</li>
+            <li>Rapidly prototyping a greenfield patient portal using Ralph loops
+                <ul>
+                    <li>Workflow: (Linear + Figma) → PRD → JSON → Claude Code</li>
+                    <li>Higher quality, faster iteration speed, clearer docs</li>
+                </ul>
+            </li>
+            <li>Improving standard of care for symptom logging
+                <ul>
+                    <li>Training HIPAA-compliant model on 100,000s of historical messages</li>
+                    <li>Classify messages, route, and automate workflows</li>
+                    <li>Improved average CSAT and clinical outcomes</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Agents in the Enterprise Slide -->
+    <div class="slide-card">
+        <h4>Agents in the Enterprise</h4>
+        <ul>
+            <li><strong>Enterprise manufacturing company (US):</strong> Uses agents for accelerating developer onboarding, using GitHub Copilot + Claude to build out a dev portal</li>
+            <li><strong>Cisco (18K developers):</strong> Use Codex for complex migrations, code review and refactoring, cutting review time by 50%</li>
+            <li><strong>JP Morgan Chase — Multi-Agent Framework for Annotation (MAFA):</strong>
+                <ul>
+                    <li>Uses multiple specialized agents to independently label customer interaction data (intent, entities, FAQs)</li>
+                    <li>A judge agent aggregates and re-ranks results via consensus and confidence scoring</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <p>Introducing <strong>consensus among agents</strong> is a validation strategy — one set of agents works independently, then another set re-ranks and deprioritizes based on the level of agreement.</p>
+
+    <p>AI does not solve organizational or systems-level problems. Those are still a domain we must tackle as humans. Even if AI collapses the cost of building and implementation, we still have human and systems-level processes and constraints to deal with.</p>
+
+    <p>Set goals and measure progress. We need to measure outcomes and gather data to make good decisions.</p>
+
+    <div class="callout">Gather requirements and plan!</div>
+
+    <!-- Metrics Framework -->
+    <h3>Measuring AI Impact: A Three-Pillar Framework</h3>
+    <div class="metrics-grid">
+        <div class="metric-col">
+            <h5>Utilization</h5>
+            <div class="metric-question">How much are developers adopting and utilizing AI tools?</div>
+            <ul>
+                <li>AI tool usage (DAUs/WAUs)</li>
+                <li>% of PRs that are AI-assisted</li>
+                <li>% of committed code that is AI-generated</li>
+                <li>Tasks assigned to agents *</li>
+            </ul>
+        </div>
+        <div class="metric-col">
+            <h5>Impact</h5>
+            <div class="metric-question">How is AI impacting engineering productivity?</div>
+            <ul>
+                <li>AI-driven time savings (dev hours/week)</li>
+                <li>Developer satisfaction</li>
+                <li>DX Core 4 metrics:
+                    <ul style="list-style:circle; margin-top: 0.2rem;">
+                        <li>PR throughput</li>
+                        <li>Perceived rate of delivery</li>
+                        <li>Developer Experience Index (DXI)</li>
+                        <li>Code maintainability</li>
+                        <li>Change confidence</li>
+                        <li>Change fail percentage</li>
+                    </ul>
+                </li>
+                <li>Human-equivalent hours (HEH) completed by agents *</li>
+            </ul>
+        </div>
+        <div class="metric-col">
+            <h5>Cost</h5>
+            <div class="metric-question">Is our AI spend and return on investment optimal?</div>
+            <ul>
+                <li>AI spend (total and per developer)</li>
+                <li>Net time gain per developer <span class="note">(time savings − AI spend)</span></li>
+                <li>Agent hourly rate <span class="note">(HEH / AI spend)</span> *</li>
+            </ul>
+        </div>
+    </div>
+
+    <p>As cost goes up, is the investment justified?</p>
+
+    <div class="callout">
+        <strong>DevEx matters more than ever.</strong> Just call it "Agent Experience" now. Fast CI, good documentation, tooling — all the things that would have made life easier for humans but were never approved for time and resource expenditure by leadership. Now the agents need them, so their cost will be justified. And we can also use agents to build them and keep them in sync.
+    </div>
+
+    <!-- Bottlenecks Chart -->
+    <div class="chart-card">
+        <h4>Annualized distribution of developer time by workflow phase</h4>
+        <div class="chart-subtitle">Self-reported data from sample of 134,085 engineers</div>
+        <canvas id="chart-bottlenecks" height="300"></canvas>
+        <div class="data-table">
+            <table>
+                <thead><tr><th>Workflow Phase</th><th>Relative Time Impact</th></tr></thead>
+                <tbody>
+                    <tr><td>Meeting-heavy days</td><td>Highest</td></tr>
+                    <tr><td>Interruption frequency</td><td>Very High</td></tr>
+                    <tr><td>AI time savings</td><td>High</td></tr>
+                    <tr><td>Build and test wait time</td><td>High</td></tr>
+                    <tr><td>Dev environment toil</td><td>Moderate</td></tr>
+                    <tr><td>Review wait time</td><td>Moderate</td></tr>
+                    <tr><td>Code comprehension</td><td>Moderate</td></tr>
+                    <tr><td>Information-seeking</td><td>Lower</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p>Meetings, CI, and other bottlenecks for people are still significant problems.</p>
+
+    <!-- Barriers Chart -->
+    <div class="chart-card">
+        <h4>Organizational barriers to AI adoption</h4>
+        <canvas id="chart-barriers" height="260"></canvas>
+        <div class="data-table">
+            <table>
+                <thead><tr><th>Barrier</th><th>Relative Impact</th></tr></thead>
+                <tbody>
+                    <tr><td>Challenging change management</td><td>Highest</td></tr>
+                    <tr><td>Lack of executive sponsorship</td><td>High</td></tr>
+                    <tr><td>Poor user experience</td><td>Moderate–High</td></tr>
+                    <tr><td>Model output quality concerns</td><td>Moderate</td></tr>
+                    <tr><td>Unwillingness to adopt new tools</td><td>Moderate</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Frameworks -->
+    <h3>Recommended Frameworks</h3>
+    <div class="frameworks-grid">
+        <div class="framework-card">
+            <h5>DORA AI Capabilities Model</h5>
+            <div class="framework-source">dora.dev</div>
+            <ul>
+                <li>Clear and communicated AI stance</li>
+                <li>Working in small batches</li>
+                <li>Healthy data ecosystems</li>
+                <li>User-centric focus</li>
+                <li>AI-accessible internal data</li>
+                <li>Quality internal platforms</li>
+                <li>Strong version control practices</li>
+            </ul>
+        </div>
+        <div class="framework-card">
+            <h5>Thoughtworks FOREST Framework</h5>
+            <div class="framework-source">thoughtworks.com</div>
+            <ul>
+                <li><strong>F</strong>oundational architecture</li>
+                <li><strong>O</strong>perating model</li>
+                <li><strong>R</strong>eadiness of data</li>
+                <li><strong>E</strong>xperiences for humans + AI</li>
+                <li><strong>S</strong>trategic alignment</li>
+                <li><strong>T</strong>rustworthy AI</li>
+            </ul>
+        </div>
+    </div>
+
+    <p>Experiment by solving real customer problems.</p>
+    <p><a class="resource-link" href="https://thoughtworks.com" target="_blank">🔗 Thoughtworks.com — AI usage stats</a></p>
+</section>
+
+<!-- ═══════════════════ SESSION 3 ═══════════════════ -->
+<section class="session" id="session-cursor">
+    <div class="session-header">
+        <div class="session-label">Session 03</div>
+        <h2 class="session-title">Lessons from Building Cursor</h2>
+        <div class="session-speakers">Sualeh Asif (Co-Founder, Cursor) · Alex Xu (Author &amp; Co-Founder, ByteByteGo) · Sahn Lam (Author &amp; Co-Founder, ByteByteGo)</div>
+    </div>
+
+    <p>We need DevEx teams that specialize in figuring out how to tell agents about our codebases and standards.</p>
+
+    <div class="quote">
+        "The best engineers I know just aren't writing code by hand anymore and that's just the way it is."
+    </div>
+
+    <p>The pace of change is one to two capability jumps per month, and accelerating. Our usage will evolve with it. Our "manager instinct" will become refined.</p>
+
+    <div class="callout">
+        We will all turn into managers of teams of agents instead of individual contributors ourselves.
+    </div>
+
+    <h3>Self-Evolving Codebases</h3>
+    <p>The idea of a self-evolving codebase was introduced — AI continuously improving and refactoring the code it works on.</p>
+
+    <div class="callout">
+        What if we used a Ralph Loop for a self-evolving codebase to rebuild all of our legacy code on outdated tech stacks?
+    </div>
+
+    <p>Most engineers report liking coding <em>more</em> now than before.</p>
+
+    <div class="callout">
+        The tedious parts of coding and debugging are gone now.
+    </div>
+
+    <h3>Reinforcement Learning and Model Improvement</h3>
+    <p>Each token has "more juice" in a better base model. It's not just that the new model is more efficient in using tokens — the quality of reasoning per token improves.</p>
+
+    <p>Models will get better at using design systems and standards over time. But we still have to refine those artifacts for them to consume.</p>
+
+    <div class="callout">
+        Agent Experience is key going forward.
+    </div>
+</section>
+
+<!-- ═══════════════════ SESSION 4 ═══════════════════ -->
+<section class="session" id="session-panel-beck">
+    <div class="session-header">
+        <div class="session-label">Session 04 · Panel</div>
+        <h2 class="session-title">Frameworks for Reinventing Software — Again and Again</h2>
+        <div class="session-speakers">Kent Beck · Martin Fowler · Gergely Orosz</div>
+    </div>
+
+    <div class="panel-exchange">
+        <div class="panel-topic">On approaching AI with the right mindset</div>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> Thanks for pushing TDD all these years because it is very important for agents.</p>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> I am working on ridiculously ambitious projects.</p>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> You have to balance skepticism and curiosity. And you have to be skeptical about your own skepticism.</p>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> What is the smallest experiment I can run to validate to my own satisfaction that a claim is true?</p>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> You need to be able to verify your validation as well.</p>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> To use this tool well, you have to learn to use it well. When people give you the balance of good and bad, they are worth listening to.</p>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> What is good and bad changes week to week. In this environment you can't possibly have the answer. You are just as smart as everyone else in your ignorance.</p>
+
+        <div class="panel-topic">On organizational expectations</div>
+
+        <p class="panel-remark"><span class="speaker gergely">Gergely Orosz:</span> Companies adopted Agile to make things faster, cheaper, and better — and they are expecting the same thing with AI.</p>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> Most organizations don't actually want faster, cheaper, better.</p>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> There will be a difference between people who use AI well and those who use it badly. Part of that is willingness to learn.</p>
+
+        <div class="panel-topic">On AI as an amplifier</div>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> AI is an amplifier. AI tools augment skilled engineers and those building skills to use them. I'm not sure where the "middle" devs who just do what specs tell them are going to go in the new job market.</p>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> Over the course of history, with every periodic abstraction that increases productivity, employers say "we're going to get rid of all the programmers, woohoo!" That amps up the fear factor while we're in the middle of a new abstraction adoption phase.</p>
+
+        <div class="panel-topic">On the future of code and programming</div>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> No one is going to be writing code in six months. But we will still be writing prompts. So we will be writing <em>something</em>. The abstraction level is increasing.</p>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> I'm very concerned we are going to have some security incidents — like letting AI do things such as read emails.</p>
+
+        <div class="panel-topic">On solo programming and collaboration</div>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> We are moving back to "solo programming." It's not the same to have a team of agents who don't question you with different ideas.</p>
+
+        <div class="callout">
+            This is actually comforting for many people who tend to be introverts, who hated the open office and enjoyed diving deep into code by themselves. But it is antithetical to pair programming and Agile, which are based around coordinating teams. We may simply not need that going forward.
+        </div>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> Is pair programming two people controlling many "genies"?</p>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> Every time the models get faster, we lose the chance to have conversations with other people while they "think."</p>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> Well-modularized code makes it easier for the agents.</p>
+
+        <div class="panel-topic">The most surprising takeaway</div>
+
+        <div class="key-takeaway">
+            <p>"The satisfaction of getting that one function right just doesn't matter anymore."</p>
+            <div class="attribution">— Kent Beck</div>
+        </div>
+
+        <div class="callout">
+            This is the most surprising and controversial takeaway, especially coming from Kent Beck!
+        </div>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> We need to focus on the domain instead of the program.</p>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> Value is not flowing smoothly to where it is created.</p>
+
+        <div class="panel-topic">On professional organization</div>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> (Responding to a call to form engineer unions to protect jobs) We shouldn't call our gathering a "union" but a "professional association."</p>
+
+        <div class="panel-topic">On burnout</div>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> I have been working with AI agents for multiple hours a day. I wouldn't recommend it as a strategy. Set boundaries on your time and effort and pay attention to them.</p>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> I learned a long time ago I could only program for a couple of hours straight effectively. Watch pushing yourself to the point where you are creating negative value.</p>
+
+        <div class="panel-topic">On productivity metrics</div>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> How many PRs do you want? I will make that many.</p>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> Measures of productivity have always been bogus and are doubly bogus now. It's not about code, it's not about PRs — it's about how our customers are doing better and the impact you have on that.</p>
+
+        <div class="panel-topic">On quality vs speed</div>
+
+        <p class="panel-remark"><span class="speaker martin">Martin Fowler:</span> To go faster you need higher quality. This is what we are constantly battling to push.</p>
+
+        <div class="callout">
+            To ensure quality and future speed, we still have to take the time to define the architecture and APIs even if we aren't writing the code ourselves. And we have to verify that the AI is producing things to spec. Well-architected software will be easier and faster for agents to maintain and enhance in the future. We still need to build things "right" even though it takes longer than just vibe coding without planning and getting "something" built and working — because done right, the rest of the company and its agents will go faster going forward.
+        </div>
+
+        <div class="panel-topic">On features vs futures</div>
+
+        <p class="panel-remark"><span class="speaker kent">Kent Beck:</span> We need to develop some kind of rhythm where we invest in features, then invest in futures, and repeat. It's hard to see futures and easy to see features. You need to find the balance.</p>
+
+        <div class="callout">
+            "Futures" meaning: getting rid of tech debt, learning new tools and processes, gathering requirements and feedback to design new features, etc.
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════ SESSION 5 ═══════════════════ -->
+<section class="session" id="session-product-eng">
+    <div class="session-header">
+        <div class="session-label">Session 05 · Panel</div>
+        <h2 class="session-title">Leading Product Engineering Teams in an AI-native World</h2>
+        <div class="session-speakers">Drew Hoskins (Author, The Product-Minded Engineer / Staff PM, Temporal Technologies) · Michelle Lim (Co-Founder, Flint) · Tuomas Artman (Co-Founder, Linear) · Margaret-Ann Seger (VP of Product, Statsig)</div>
+    </div>
+
+    <div class="panel-exchange">
+        <div class="panel-topic">Defining the product engineer</div>
+
+        <p class="panel-remark"><span class="speaker drew">Drew Hoskins:</span> A product engineer cares about "what" and "why" as much as "how." Anything that has an interface is a product.</p>
+
+        <div class="callout">
+            Websites, apps, APIs, tools — anything with a surface a human interacts with is a product.
+        </div>
+
+        <p class="panel-remark"><span class="speaker michelle">Michelle Lim:</span> Product-minded engineers are focused on the user. The more someone can define the problem, build it, and test it, the better.</p>
+
+        <p class="panel-remark"><span class="speaker drew">Drew Hoskins:</span> Developers are people too and need good UI to do their job.</p>
+
+        <div class="callout">DevEx has long been a neglected priority.</div>
+
+        <p class="panel-remark"><span class="speaker michelle">Michelle Lim:</span> The industry puts us in categories of "frontend" and "backend" when it should be <strong>product engineers</strong> vs <strong>coding engineers</strong>.</p>
+
+        <div class="panel-topic">On "taste" as an engineering skill</div>
+
+        <p class="panel-remark"><span class="speaker tuomas">Tuomas Artman:</span> We wanted to build a product that is not just 2× higher in quality but 10×. We thought about how to create that and hired people with a similar taste.</p>
+
+        <p class="panel-remark"><span class="speaker drew">Drew Hoskins:</span> Taste is a craft that can be learned. It is a "shoe-shift" — putting yourself in the user's place while using your product.</p>
+
+        <p>Don't fall back on established knowledge. See what is unique and move forward from first principles.</p>
+
+        <p class="panel-remark"><span class="speaker michelle">Michelle Lim:</span> Purple websites with rounded corners are commonly generated by AI. We wanted to avoid our site generators doing what all the others were doing.</p>
+
+        <div class="panel-topic">Practical quality practices</div>
+
+        <p class="panel-remark"><span class="speaker tuomas">Tuomas Artman:</span> Have your org practice <strong>"Defect Wednesday"</strong>: file a ticket for a defect (not a bug that needs urgent fix) every week.</p>
+
+        <div class="callout">
+            Teams will start habitually looking for things that affect polish and quality, and develop a rhythm of fixing them — improving product experience beyond just critical/functional issues.
+        </div>
+
+        <p class="panel-remark"><span class="speaker michelle">Michelle Lim:</span> Have a <strong>rotating Quality Engineer</strong> role where one developer focuses on finding bugs and small fixes for a week.</p>
+
+        <p class="panel-remark"><span class="speaker drew">Drew Hoskins:</span> One car company has an email address for people to complain about the cars and uses AI to comb through the issues and surface important or pervasive problems.</p>
+
+        <div class="callout">
+            This is something AI can do that was too cumbersome for people before, and it can help identify issues quickly.
+        </div>
+
+        <p class="panel-remark"><span class="speaker michelle">Michelle Lim:</span> There is no substitute for talking to customers directly about their experience with your product.</p>
+
+        <div class="panel-topic">On metrics and tech debt</div>
+
+        <p class="panel-remark"><span class="speaker drew">Drew Hoskins:</span> As a tech lead I would advise running the gradient from vanity metrics to performance metrics and aligning them with the value your product provides customers.</p>
+
+        <p class="panel-remark"><span class="speaker tuomas">Tuomas Artman:</span> The battle with tech debt will continue till the end of days.</p>
+
+        <p class="panel-remark"><span class="speaker tuomas">Tuomas Artman:</span> If you are shipping something on an uncertain concept, it's fine to trade off quality for speed.</p>
+
+        <div class="panel-topic">On testing in the AI era</div>
+
+        <p class="panel-remark"><span class="speaker drew">Drew Hoskins:</span> Testing is important to ensure quality output of AI. If written well, tests are almost proof that the idea and implementation are solid.</p>
+
+        <div class="callout">
+            Test coverage should go up significantly. The old trade-off of high vs "just enough" coverage was always about how long it took to write and run tests. We don't care about that anymore since AI can write them faster than the code itself. <strong>Verifying that tests are good and actually reflect desired outcomes</strong> is the most important thing now. TDD is probably the right path.
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════ SESSION 6 ═══════════════════ -->
+<section class="session" id="session-closing">
+    <div class="session-header">
+        <div class="session-label">Closing Session</div>
+        <h2 class="session-title">Closing Remarks</h2>
+        <div class="session-speakers">What's Next: Rajeev Rajan (CTO, Atlassian), Thomas Dohmke (Co-Founder &amp; CEO, Entire), Gergely Orosz · Closing Thoughts: Gergely Orosz</div>
+    </div>
+
+    <p><strong>Rovo Dev</strong> was mentioned — Atlassian's developer tool (also, Atlassian acquired Loom).</p>
+
+    <div class="callout">
+        The founder of GitHub is now working on a new source control system called <strong>Entire</strong> that caters to how AI agents work (vs humans). It's about building a context graph and recording the decisions made along with code commits — the "why" and "how" along with the "what."
+    </div>
+
+    <p><a class="resource-link" href="https://entire.io/" target="_blank">🔗 entire.io — Agent-native source control</a></p>
+</section>
+
+</main>
+
+<footer>
+    <p>Notes taken at The Pragmatic Summit · February 11, 2026 · San Francisco, CA</p>
+    <p style="margin-top: 0.3rem;">Personal commentary marked with 💭</p>
+</footer>
+
+<script>
+// ── Chart defaults ──
+Chart.defaults.font.family = "'Source Sans 3', sans-serif";
+Chart.defaults.font.size = 13;
+Chart.defaults.color = '#6b7280';
+Chart.defaults.plugins.legend.display = false;
+
+const red = '#c0392b';
+const redLight = '#e74c3c';
+const blue = '#2874a6';
+const blueLight = '#5dade2';
+const gray = '#bdc3c7';
+
+// ── Chart 1: AI Adoption (Doughnut) ──
+new Chart(document.getElementById('chart-adoption'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Daily', 'Weekly', 'Monthly', 'None/No Data', 'Never'],
+        datasets: [{
+            data: [44.1, 28, 13.2, 6.6, 0.8],
+            backgroundColor: [red, redLight, '#f1948a', gray, '#e5e2dc'],
+            borderWidth: 0,
+            hoverOffset: 6
+        }]
+    },
+    options: {
+        cutout: '55%',
+        plugins: {
+            legend: { display: true, position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } }
+        }
+    }
+});
+
+// ── Chart 2: Time Savings (Bar) ──
+new Chart(document.getElementById('chart-timesavings'), {
+    type: 'bar',
+    data: {
+        labels: ['Daily', 'Weekly', 'Monthly', 'Infrequent'],
+        datasets: [{
+            data: [4.8, 4.0, 3.4, 2.8],
+            backgroundColor: [red, red, red, '#f1948a'],
+            borderRadius: 4,
+            barPercentage: 0.6
+        }]
+    },
+    options: {
+        scales: {
+            y: { beginAtZero: true, max: 6, title: { display: true, text: 'Avg. hours saved / week' }, grid: { color: '#f0ebe3' } },
+            x: { grid: { display: false } }
+        }
+    }
+});
+
+// ── Chart 3: AI-Authored Code (Bar) ──
+new Chart(document.getElementById('chart-aicode'), {
+    type: 'bar',
+    data: {
+        labels: ['Daily', 'Weekly', 'Monthly', 'Infrequent'],
+        datasets: [{
+            data: [30, 26, 25, 12],
+            backgroundColor: [red, red, red, '#f1948a'],
+            borderRadius: 4,
+            barPercentage: 0.6
+        }]
+    },
+    options: {
+        scales: {
+            y: { beginAtZero: true, max: 40, title: { display: true, text: '% of AI-authored code' }, grid: { color: '#f0ebe3' },
+                ticks: { callback: v => v + '%' }
+            },
+            x: { grid: { display: false } }
+        }
+    }
+});
+
+// ── Chart 4: Onboarding (Line) ──
+new Chart(document.getElementById('chart-onboarding'), {
+    type: 'line',
+    data: {
+        labels: ['Q1 \'24', 'Q2 \'24', 'Q3 \'24', 'Q4 \'24', 'Q1 \'25+'],
+        datasets: [{
+            data: [95, 80, 60, 50, 45],
+            borderColor: red,
+            backgroundColor: 'rgba(192,57,43,0.08)',
+            fill: true,
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: red,
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2
+        }]
+    },
+    options: {
+        scales: {
+            y: { beginAtZero: true, max: 110, title: { display: true, text: 'Days to reach 1st merged PR' }, grid: { color: '#f0ebe3' } },
+            x: { grid: { display: false } }
+        }
+    }
+});
+
+// ── Chart 5: High Adoption, Low Transformation (Grouped Bar) ──
+new Chart(document.getElementById('chart-transformation'), {
+    type: 'bar',
+    data: {
+        labels: ['Investigated', 'Piloted', 'Successfully Implemented'],
+        datasets: [
+            {
+                label: 'General-Purpose LLMs',
+                data: [80, 50, 40],
+                backgroundColor: '#1a1a2e',
+                borderRadius: 4,
+                barPercentage: 0.7
+            },
+            {
+                label: 'Embedded / Task-Specific GenAI',
+                data: [60, 30, 5],
+                backgroundColor: blue,
+                borderRadius: 4,
+                barPercentage: 0.7
+            }
+        ]
+    },
+    options: {
+        plugins: {
+            legend: { display: true, position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyle: 'circle' } }
+        },
+        scales: {
+            y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' }, grid: { color: '#f0ebe3' } },
+            x: { grid: { display: false } }
+        }
+    }
+});
+
+// ── Chart 6: Developer Time Bottlenecks (Horizontal Bar) ──
+new Chart(document.getElementById('chart-bottlenecks'), {
+    type: 'bar',
+    data: {
+        labels: ['Meeting-heavy days', 'Interruption frequency', 'AI time savings', 'Build & test wait time', 'Dev environment toil', 'Review wait time', 'Code comprehension', 'Information-seeking'],
+        datasets: [{
+            data: [290, 230, 170, 140, 80, 65, 60, 40],
+            backgroundColor: blue,
+            borderRadius: 4,
+            barPercentage: 0.65
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        scales: {
+            x: { display: false },
+            y: { grid: { display: false } }
+        }
+    }
+});
+
+// ── Chart 7: Organizational Barriers (Horizontal Bar) ──
+new Chart(document.getElementById('chart-barriers'), {
+    type: 'bar',
+    data: {
+        labels: ['Challenging change management', 'Lack of executive sponsorship', 'Poor user experience', 'Model output quality concerns', 'Unwillingness to adopt new tools'],
+        datasets: [{
+            data: [9.5, 8, 7, 6, 5.5],
+            backgroundColor: '#34495e',
+            borderRadius: 4,
+            barPercentage: 0.6
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        scales: {
+            x: { display: false },
+            y: { grid: { display: false } }
+        }
+    }
+});
+</script>
+
+</body>
+</html>
