@@ -538,6 +538,10 @@
             <a href="#session-closing">Closing Session</a>
             <span class="toc-speaker">Rajeev Rajan (Atlassian), Thomas Dohmke (Entire), Gergely Orosz</span>
         </li>
+        <li>
+            <a href="#session-learnings">Key Learnings</a>
+            <span class="toc-speaker">Co-authored by Lindsay Donaghe and Claude (Anthropic)</span>
+        </li>
     </ol>
 </nav>
 
@@ -1106,6 +1110,67 @@
     </div>
 
     <p><a class="resource-link" href="https://entire.io/" target="_blank">🔗 entire.io — Agent-native source control</a></p>
+</section>
+
+<!-- ═══════════════════ KEY LEARNINGS ═══════════════════ -->
+<section class="session" id="session-learnings">
+    <div class="session-header">
+        <div class="session-label">Key Learnings</div>
+        <h2 class="session-title">Key Learnings</h2>
+        <div class="session-speakers" style="font-style: italic;">Co-authored by Lindsay Donaghe and Claude (Anthropic) — combining firsthand conference notes with AI-assisted analysis of the themes, patterns, and implications.</div>
+    </div>
+
+    <h3>How Our Work Is Changing</h3>
+
+    <p>The bottleneck in software development is migrating steadily upward: from writing code, to reviewing and validating it, to gathering user requirements as fast and accurately as possible. The most valuable engineering skill is increasingly about understanding <em>what</em> to build rather than <em>how</em> to build it.</p>
+
+    <p>Kent Beck captured this shift most starkly: the satisfaction of getting one function right "just doesn't matter anymore." Coming from the person who championed TDD and extreme programming, this signals a fundamental reorientation — away from craft at the code level and toward mastery of the problem domain.</p>
+
+    <p>We're also moving back toward "solo programming," but in a new form: one engineer directing many agents. The social dynamics of engineering teams may change significantly, with less need for the coordination structures that Agile was built around.</p>
+
+    <div class="callout">
+        This is actually comforting for many people who tend to be introverts, who hated the open office and enjoyed diving deep into code by themselves. But it raises real questions about how we maintain shared understanding and mentorship without the old collaboration structures.
+    </div>
+
+    <h3>Practices We Can Adopt Now</h3>
+
+    <p><strong>Defect Wednesday:</strong> File a ticket for a non-urgent defect every week. Teams build the habit of spotting polish and quality issues, and develop a rhythm of fixing them — improving the product experience beyond just critical bugs. <em>(Tuomas Artman, Linear)</em></p>
+
+    <p><strong>Rotating Quality Engineer:</strong> One developer focuses on finding bugs and small fixes for a week, then rotates. <em>(Michelle Lim, Flint)</em></p>
+
+    <p><strong>Features/Futures Rhythm:</strong> Deliberately alternate between shipping features and investing in the foundation — paying down tech debt, learning new tools, gathering requirements. It's hard to see futures and easy to see features, so this requires intentional discipline. <em>(Kent Beck)</em></p>
+
+    <p><strong>Raise Test Coverage Aggressively:</strong> The economics of testing have flipped. The old trade-off of high vs "just enough" coverage was always about how long it took to write and run tests. AI collapses that cost. The important thing now is verifying that tests are <em>good</em> and actually reflect desired outcomes. TDD is likely the right path forward.</p>
+
+    <div class="callout">
+        DevEx matters more than ever — just call it "Agent Experience" now. Fast CI, good documentation, clean APIs, well-architected code. All things that would have made life easier for humans but were never approved for time and resource expenditure. Now the agents need them, so their cost will be justified — and we can use agents to build and maintain them too.
+    </div>
+
+    <h3>What Leaders and Organizations Should Watch</h3>
+
+    <p><strong>AI is an amplifier, not a solution.</strong> Some companies see 2× more customer-facing incidents while others see 50% fewer. The difference isn't the tools — it's the organizational foundations underneath. Fix your foundations before scaling AI adoption.</p>
+
+    <p><strong>Adoption does not equal impact.</strong> 80% of organizations have investigated general-purpose LLMs, but only 40% have successfully implemented them. For embedded or task-specific GenAI, that number drops to 5%. Tools primarily enhance individual productivity; organizational gains require organizational-level strategy.</p>
+
+    <p><strong>Onboarding time is being cut in half.</strong> This has significant implications for team composition, hiring velocity, and how quickly new engineers can contribute meaningfully.</p>
+
+    <p><strong>Security risks are real and underappreciated.</strong> Martin Fowler specifically warned about security incidents from giving AI too much access — like letting it read emails. As agents gain more autonomy, the attack surface grows.</p>
+
+    <p><strong>Productivity metrics are "doubly bogus" now.</strong> It's not about code volume or PR count — it's about customer outcomes. As Kent Beck quipped: "How many PRs do you want? I will make that many."</p>
+
+    <h3>Looking Ahead</h3>
+
+    <p>Models will get better at consuming and following design systems and standards. Investing in well-defined architectural artifacts now will have compounding returns as AI tools improve.</p>
+
+    <p>The concept of a "self-evolving codebase" — where AI continuously refactors and improves the code it works on — may move from idea to reality faster than we expect.</p>
+
+    <div class="callout">
+        What if we used a Ralph Loop for a self-evolving codebase to rebuild all of our legacy code on outdated tech stacks?
+    </div>
+
+    <p>The distinction between <strong>durable code</strong> and <strong>disposable code</strong> will become critical for deciding where to invest human oversight versus where to let agents iterate freely.</p>
+
+    <p>And perhaps most importantly: the engineers who thrive will be those who develop <strong>taste</strong> — a product sensibility that goes beyond technical execution. As Drew Hoskins put it, taste is a learnable craft: putting yourself in the user's shoes while using your own product.</p>
 </section>
 
 </main>
